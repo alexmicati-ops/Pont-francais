@@ -94,7 +94,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!isValid) return;
 
-      // Simulate submission (no backend yet)
+      // Build mailto link with form data
+      const nameVal = encodeURIComponent(name.value.trim());
+      const emailVal = encodeURIComponent(email.value.trim());
+      const docDescVal = encodeURIComponent(docDesc.value.trim());
+      const wordCountVal = document.getElementById('word-count').value.trim();
+      const serviceTypeVal = document.getElementById('service-type').value;
+      const messageVal = encodeURIComponent(document.getElementById('message').value.trim());
+
+      const serviceTypeLabel = serviceTypeVal === 'premium' ? 'Premium (Legal/Medical/Technical)' :
+                                serviceTypeVal === 'standard' ? 'Standard (General Content)' : 'Not specified';
+
+      const body = `Quote Request Details:%0D%0A%0D%0A
+Name: ${nameVal}%0D%0A
+Email: ${emailVal}%0D%0A
+Document Description: ${docDescVal}%0D%0A
+Estimated Word Count: ${wordCountVal || 'Not specified'}%0D%0A
+Service Type: ${serviceTypeLabel}%0D%0A
+Additional Notes: ${messageVal || 'None'}`;
+
+      const mailtoLink = `mailto:alexmicati@hotmail.com?subject=Quote%20Request%20from%20${nameVal}&body=${body}`;
+
+      // Open mailto as primary action
+      window.location.href = mailtoLink;
+
+      // Show success message as fallback
       const submitBtn = this.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
       submitBtn.textContent = 'Sending...';
@@ -160,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rateLabel = '$0.25/word';
       } else if (serviceType === 'premium') {
         rate = 0.40;
-        rateLabel = '$0.40–$0.50/word';
+        rateLabel = '$0.40/word';
       }
 
       // Look for or create an estimate display

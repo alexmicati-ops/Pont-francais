@@ -560,9 +560,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .currency {
-  font-size: 0.95rem;
-  color: var(--color-text-light);
+  font-size: 1rem;
+  color: var(--color-navy);
+  font-weight: 600;
   margin-top: 4px;
+  letter-spacing: 0.5px;
 }
 
 .pricing-features {
